@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="LoginTestSuite" verbose="1">
+
+    <test name="loginTests">
+        <classes>
+            <class name="testCases.LoginTestsSuit.TC_001_PositiveLoginTests" />
+        </classes>
+    </test>
+
+</suite>

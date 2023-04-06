@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="HomePageTestSuite" verbose="1">
+
+    <test name="homePageTests">
+        <classes>
+            <class name="testCases.LoginTestsSuit.TC_001_NegativeLoginTests" />
+        </classes>
+    </test>
+
+</suite>
