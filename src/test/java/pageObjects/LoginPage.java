@@ -12,7 +12,6 @@ public class LoginPage extends BasePage {
     WebElement txtUserName;
     @FindBy(xpath = "//input[@name='password']")
     WebElement txtPassword;
-    @FindBy(xpath = "//input[@name='btnLogin']")
     WebElement btnLogin;
     public WebElement getTxtUserName() {
         return txtUserName;
@@ -24,5 +23,12 @@ public class LoginPage extends BasePage {
 
     public WebElement getBtnLogin() {
         return btnLogin;
+    }
+
+    public HomePage loginSuccess(String userName,String password){
+        getTxtUserName().sendKeys(userName);
+        getTxtPassword().sendKeys(password);
+        getBtnLogin().click();
+        return new HomePage(driver);
     }
 }
