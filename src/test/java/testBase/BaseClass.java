@@ -10,6 +10,7 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
 import java.lang.reflect.Method;
+import java.util.ResourceBundle;
 
 public class BaseClass {
     protected WebDriver driver;
@@ -18,10 +19,13 @@ public class BaseClass {
     protected String testName;
     protected String testMethodName;
 
+    protected ResourceBundle rb;
+
     @Parameters({ "browser" })
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method, @Optional("chrome") String browser, ITestContext ctx) {
         String testName = ctx.getCurrentXmlTest().getName();
+        rb= ResourceBundle.getBundle("config");
         logger = LogManager.getLogger(this.getClass());
         BrowserDriverFactory factory = new BrowserDriverFactory(browser);
         driver = factory.createDriver();
@@ -32,7 +36,8 @@ public class BaseClass {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        driver.get("http://www.demo.guru99.com/V4/");
+        //driver.get("http://www.demo.guru99.com/V4/");
+        driver.get(rb.getString("appURL"));
         driver.manage().window().maximize();
 
         this.testSuiteName = ctx.getSuite().getName();
