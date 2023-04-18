@@ -1,5 +1,6 @@
 package testCases.LoginTestsSuit;
 
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
@@ -10,31 +11,38 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 
+
 public class TC_001_LoginTests extends TestUtilities {
     LoginPage loginPage;
     HomePage homePage;
- @Test(dataProvider = "login-data")
+    @Test(dataProvider = "login-data")
     public void Test_LoginPage(String userName,String password) throws InterruptedException {
-        loginPage = new LoginPage(driver);
-        logger.debug("**** Debug Log *****");
-        homePage = new HomePage(driver);
-        homePage = loginPage.loginSuccess(userName,password);
-        takeScreenshot("screen shots");
-        String actualTitle = driver.getTitle();
-        assertEquals(actualTitle,Util.EXPECT_TITLE,"Title does not match.");
-        String pageText = homePage.getLblManagerID().getText();
-        String[] parts = pageText.split(":");
-        String dynamicText = parts[1];
-        assertTrue(dynamicText.substring(1, 5).equals(Util.FIRST_PATTERN));
-        String remain = dynamicText.substring(dynamicText.length() - 4);
-        assertTrue(remain.matches(Util.SECOND_PATTERN));
-        assertEquals("9806", remain,Util.EXPECT_ERROR);
+        try {
+           loginPage = new LoginPage(driver);
+           logger.debug("**** Debug Log *****");
+           homePage = new HomePage(driver);
+           homePage = loginPage.loginSuccess(userName, password);
+           String actualTitle = driver.getTitle();
+           assertEquals(actualTitle, Util.EXPECT_TITLE, "Title does not match.");
+           String pageText = homePage.getLblManagerID().getText();
+           String[] parts = pageText.split(":");
+           String dynamicText = parts[1];
+           assertTrue(dynamicText.substring(1, 5).equals(Util.FIRST_PATTERN));
+           String remain = dynamicText.substring(dynamicText.length() - 4);
+           assertTrue(remain.matches(Util.SECOND_PATTERN));
+           assertEquals("9806", remain, Util.EXPECT_ERROR);
+           //Alert alt= driver.switchTo().alert();
+       }catch (Exception ex){
+          // String actualBoxMsg;
+
+           Assert.fail("******* TEST FAIL *****");
+       }
     }
-    @DataProvider(name = "login-data")
+    @DataProvider(name = "login-data" , indices = {2})
     public String[][] dataProvider() {
         String[][] data = {
                 {"mngr489806","ynAbAze"},
-                {"mngr4898061","ynAbAze"},
+                {"mngr4898061","ynAbAze1"},
                 {"mngr489806","ynAbAze1"}
         };
         return data;

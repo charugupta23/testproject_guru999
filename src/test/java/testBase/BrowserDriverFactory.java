@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class BrowserDriverFactory {
 
@@ -23,11 +24,14 @@ public class BrowserDriverFactory {
                 options.addArguments("--remote-allow-origins=*");
                 driver.set(new ChromeDriver(options));
                 break;
+            case "firefox":
+                driver.set(new FirefoxDriver());
+                break;
             default:
                 System.out.println("Do not know how to start: " + browser + ", starting chrome.");
-                System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver");
-                driver.set(new ChromeDriver());
-                break;
+                ChromeOptions options1 = new ChromeOptions();
+                options1.addArguments("--remote-allow-origins=*");
+                driver.set(new ChromeDriver(options1)); break;
         }
 
         return driver.get();

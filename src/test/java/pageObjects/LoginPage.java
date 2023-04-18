@@ -25,10 +25,16 @@ public class LoginPage extends BasePage {
         return btnLogin;
     }
 
-    public HomePage loginSuccess(String userName,String password){
-        getTxtUserName().sendKeys(userName);
+    public HomePage loginSuccess(String username,String password){
+        getTxtUserName().sendKeys(username);
         getTxtPassword().sendKeys(password);
         getBtnLogin().click();
         return new HomePage(driver);
+    }
+    public  void negativeLogIn(String username, String password){
+        //.info("Executing LogIn with username [" + username + "] and password [" + password + "]");
+        getTxtUserName().sendKeys(username);
+        getTxtPassword().sendKeys(password);
+        getBtnLogin().click();
     }
 }
