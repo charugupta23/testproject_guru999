@@ -10,15 +10,11 @@ public class HomePage extends BasePage{
     }
     @FindBy(linkText = "Log out")
     WebElement linkLogout;
-
-   // @FindBy(xpath = "//*[contains(text(),'Manger Id']")
-    @FindBy(css = "body > table > tbody > tr > td > table > tbody > tr.heading3 > td")
+    @FindBy(xpath = "//body//table//table/tbody/tr[3]/td[1]")
     WebElement lblManagerID;
-
     public WebElement getLinkLogout() {
         return linkLogout;
     }
-
     public WebElement getLblManagerID() {
         return lblManagerID;
     }

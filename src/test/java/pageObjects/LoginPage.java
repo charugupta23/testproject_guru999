@@ -12,7 +12,6 @@ public class LoginPage extends BasePage {
     WebElement txtUserName;
     @FindBy(xpath = "//input[@name='password']")
     WebElement txtPassword;
-    @FindBy(xpath = "//input[@name='btnLogin']")
     WebElement btnLogin;
     public WebElement getTxtUserName() {
         return txtUserName;
@@ -24,5 +23,18 @@ public class LoginPage extends BasePage {
 
     public WebElement getBtnLogin() {
         return btnLogin;
+    }
+
+    public HomePage loginSuccess(String username,String password){
+        getTxtUserName().sendKeys(username);
+        getTxtPassword().sendKeys(password);
+        getBtnLogin().click();
+        return new HomePage(driver);
+    }
+    public  void negativeLogIn(String username, String password){
+        //.info("Executing LogIn with username [" + username + "] and password [" + password + "]");
+        getTxtUserName().sendKeys(username);
+        getTxtPassword().sendKeys(password);
+        getBtnLogin().click();
     }
 }

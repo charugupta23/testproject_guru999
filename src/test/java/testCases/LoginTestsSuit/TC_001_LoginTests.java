@@ -1,38 +1,57 @@
 package testCases.LoginTestsSuit;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.LoginPage;
-import testBase.BaseClass;
+import testBase.TestUtilities;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
-public class TC_001_NegativeLoginTests extends BaseClass {
+
+
+public class TC_001_LoginTests extends TestUtilities {
     LoginPage loginPage;
     HomePage homePage;
-    String CSV_Path="//Users//trivendrakumar//Desktop//SeleniumPractice//testproject_guru99//src//test//java//testCases//LoginTestsSuit//logindata.csv";
-    //@Test
-   /* public void Test_LoginPage() throws InterruptedException {
-        loginPage = new LoginPage(driver);
-        homePage = new HomePage(driver);
-        loginPage.getTxtUserName().sendKeys("mngr489806");
-        loginPage.getTxtPassword().sendKeys("ynAbAze");
-        loginPage.getBtnLogin().click();
+    @Test(dataProvider = "login-data")
+    public void Test_LoginPage(String userName,String password) throws InterruptedException {
+        try {
+           loginPage = new LoginPage(driver);
+           logger.debug("**** Debug Log *****");
+           homePage = new HomePage(driver);
+           homePage = loginPage.loginSuccess(userName, password);
+           String actualTitle = driver.getTitle();
+           assertEquals(actualTitle, Util.EXPECT_TITLE, "Title does not match.");
+           String pageText = homePage.getLblManagerID().getText();
+           String[] parts = pageText.split(":");
+           String dynamicText = parts[1];
+           assertTrue(dynamicText.substring(1, 5).equals(Util.FIRST_PATTERN));
+           String remain = dynamicText.substring(dynamicText.length() - 4);
+           assertTrue(remain.matches(Util.SECOND_PATTERN));
+           assertEquals("9806", remain, Util.EXPECT_ERROR);
+           //Alert alt= driver.switchTo().alert();
+       }catch (Exception ex){
+          // String actualBoxMsg;
 
-        String pageTitle = driver.getTitle();
-        Assert.assertEquals(pageTitle,"Guru99 Bank Manager HomePage");
-        Thread.sleep(2000);
-        homePage.getLinkLogout().click();
-        Thread.sleep(2000);
+           Assert.fail("******* TEST FAIL *****");
+       }
     }
-*/
+    @DataProvider(name = "login-data" , indices = {2})
+    public String[][] dataProvider() {
+        String[][] data = {
+                {"mngr489806","ynAbAze"},
+                {"mngr4898061","ynAbAze1"},
+                {"mngr489806","ynAbAze1"}
+        };
+        return data;
+    }
+}
+
+
     //@Test(dataProvider = "login-data")
-    public void testLoginData(String[] loginData) {
+   /* public void testLoginData(String[] loginData) {
         String username = loginData[0];
         String password = loginData[1];
         loginPage.getTxtUserName().sendKeys(username);
@@ -88,4 +107,4 @@ public class TC_001_NegativeLoginTests extends BaseClass {
         }
         System.out.println("Numbers " +numberOfRecords);
     }
-}
+*/

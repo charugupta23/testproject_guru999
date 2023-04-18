@@ -1,11 +1,21 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="LoginTestSuite" verbose="1">
 
-    <test name="loginTests">
+
+<suite name="LoginTestSuite" verbose="1" thread-count="3" parallel="tests">
+
+<test name="TC_001_PositiveLoginTests_chrome" >
+    <parameter name="browser" value="chrome"/>
+    <classes>
+        <class name="testCases.LoginTestsSuit.TC_001_LoginTests" />
+    </classes>
+</test>
+
+    <!--<test name="TC_001_PositiveLoginTests_firefox">
+        <parameter name="browser" value="firefox"/>
         <classes>
-            <class name="testCases.LoginTestsSuit.TC_001_PositiveLoginTests" />
+            <class name="testCases.LoginTestsSuit.TC_001_LoginTests" />
         </classes>
-    </test>
+    </test>-->
 
 </suite>
